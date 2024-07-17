@@ -32,7 +32,7 @@ func GetAppRequestsPerSecond(appGroupName, appName, rangeWidth string) (model.Ve
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	result, warnings, err := prometheusClient.Query(ctx, `
-		rate(istio_requests_total{reporter="source", app_group="`+appGroupName+`", app="`+appName+`", source_app!="unknown", destination_app!="unknown"}[`+rangeWidth+`])
+		rate(istio_requests_total{app_group="`+appGroupName+`", app="`+appName+`", source_app!="unknown", destination_app!="unknown"}[`+rangeWidth+`])
 	`, time.Now())
 
 	if err != nil {
